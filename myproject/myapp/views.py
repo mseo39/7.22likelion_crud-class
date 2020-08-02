@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
 
 # Create your views here.
@@ -8,13 +8,26 @@ def home(request):
     return render(request, 'home.html', {'shop':shop})
 
 def create(request):
-    # 강의를 따라 완성해봅시다.
-    pass
+    if request.method == 'POST':
+        item=Item()
+        item.name=request.POST['name']
+        item.price=request.POST['price']
+
+        item.save()
+        return redirect('home')
+    
 
 def update(request, item_id):
-    # 강의를 따라 완성해봅시다.
-    pass
+    item = get_object_or_404(Item, pk=item_id)
+    if request.method == 'POST':
+        item.name=request.POST['name']
+        item.price=request.POST['price']
+        item.save()
+        return redirect('home')
+    else:
+        return render(request, 'update.html',{'items':item})
 
 def delete(request, item_id):
-    # 강의를 따라 완성해봅시다.
-    pass
+    item = get_object_or_404(Item, pk=item_id)
+    item.delete()
+    return redirect('home')

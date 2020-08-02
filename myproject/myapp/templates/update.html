@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{%block title%}첫 페이지{%endblock%}
+{%block link%}{%static 'css/home.css'%}{%endblock%}
+{%block content%}
+    <!-- 여기서 Create, Update(창이동), Delete 구현 -->
+    <h2>수정</h2>
+    <div class="create">
+        <form action="{% url 'update' items.id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="이름" value='{{items.name}}'>
+        <br>
+        <input type="text" name="price" placeholder="가격" value='{{items.price}}'>
+        <br>
+        <input type="submit" class="button">
+        </form>
+    </div>
+
+    </div>
+{%endblock%}
